@@ -1,6 +1,6 @@
 
 from django.shortcuts import render
-from django.http import HttpResponse
+# from django.http import HttpResponse
 # Create your views here.
 
 # def sobre(request):
@@ -12,4 +12,9 @@ def home(request):
         'name': 'Jhonatan',
         })
 
+
+def recipe(request, id):
+    return render(request, 'recipes/pages/recipe-view.html', context={
+                  'name': 'Jhonatan',
+                  })
 
