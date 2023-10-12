@@ -1,7 +1,8 @@
 
-from django.shortcuts import render
-from utils.recipes.factory import make_recipe
+from django.shortcuts import render, get_list_or_404, get_object_or_404
+# from utils.recipes.factory import make_recipe
 from recipes.models import Recipe
+# from django.http import Http404
 
 # from django.http import HttpResponse
 # Create your views here.
@@ -18,16 +19,26 @@ def home(request):
 
 
 def category(request, category_id):
-    recipes = Recipe.objects.filter(
-        category__id=category_id, is_published=True).order_by('-id')
+    # recipes = Recipe.objects.filter(
+    #     category__id=category_id, is_published=True).order_by('-id')
+
+    # if not recipes:
+    #     raise Http404('Not found :(')
+
+    recipes = get_list_or_404(Recipe.objects.filter(
+        category__id=category_id, is_published=True).order_by('-id'))
+
     return render(request, 'recipes/pages/category.html', context={
         'recipes': recipes,
-        'category': recipes.first().category
+        'category': recipes[0].category
     })
 
 
 def recipe(request, id):
+    # recipe = Recipe.objects.filter(
+    #     pk=id, is_published=True).order_by('-id').first()
+    recipe = get_object_or_404(Recipe, pk=id, is_published=True,)
     return render(request, 'recipes/pages/recipe-view.html', context={
-        'recipe': make_recipe(),
+        'recipe': recipe,
         "is_detail_page": True,
     })
