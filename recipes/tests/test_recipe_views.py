@@ -2,6 +2,7 @@
 from django.urls import reverse, resolve
 from recipes import views
 from .test_recipe_base import RecipeTestBase
+# Create your tests here.
 
 
 class RecipeViewsTest(RecipeTestBase):
