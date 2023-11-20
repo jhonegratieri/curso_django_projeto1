@@ -22,5 +22,5 @@ class RecipeURLsTest(TestCase):
         self.assertEqual(url, '/recipes/search/')
 
     def test_recipe_search_loads_correct_template(self):
-        response = self.client.get(reverse('recipes:search'))
+        response = self.client.get(reverse('recipes:search') + '?q=teste')
         self.assertTemplateUsed(response, 'recipes/pages/search.html')
