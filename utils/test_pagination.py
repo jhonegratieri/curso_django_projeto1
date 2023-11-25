@@ -1,5 +1,8 @@
-from unittest import TestCase
+from django.test import TestCase
+from django.urls import reverse
+
 from utils.pagination import make_pagination_range
+# from django.core.exceptions import ValueError
 
 
 class PaginationTest(TestCase):
@@ -69,3 +72,9 @@ class PaginationTest(TestCase):
             current_page=18
             )['pagination']
         self.assertEqual([17, 18, 19, 20], pagination)
+
+    def test_if_page_query_parameter_is_integer(self):
+        response = self.client.get(reverse('recipes:home') + '?page=text')
+        request = response.wsgi_request
+        search_term_is_int_type = request.GET.get('page').isdigit()
+        self.assertFalse(search_term_is_int_type)

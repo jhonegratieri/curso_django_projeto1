@@ -4,18 +4,27 @@ from django.shortcuts import render, get_list_or_404, get_object_or_404
 from recipes.models import Recipe
 from django.http import Http404
 from django.db.models import Q
+# from django.core.paginator import Paginator
+from utils.pagination import make_pagination
 
+import os
 # from django.http import HttpResponse
 # Create your views here.
 
 # def sobre(request):
 #     return HttpResponse("SOBRE")
 
+PER_PAGE = int(os.environ.get('PER_PAGE', 3))
+
 
 def home(request):
     recipes = Recipe.objects.filter(is_published=True).order_by('-id')
+
+    page_obj, pagination_range = make_pagination(request, queryset=recipes, per_page=PER_PAGE, qty_pages=4)  # noqa: E501
+
     return render(request, 'recipes/pages/home.html', context={
-        'recipes': recipes,
+        'recipes': page_obj,
+        'pagination_range': pagination_range
     })
 
 
@@ -29,8 +38,11 @@ def category(request, category_id):
     recipes = get_list_or_404(Recipe.objects.filter(
         category__id=category_id, is_published=True).order_by('-id'))
 
+    page_obj, pagination_range = make_pagination(request, queryset=recipes, per_page=PER_PAGE, qty_pages=4)  # noqa: E501
+
     return render(request, 'recipes/pages/category.html', context={
-        'recipes': recipes,
+        'recipes': page_obj,
+        'pagination_range': pagination_range,
         'category': recipes[0].category
     })
 
@@ -59,8 +71,17 @@ def search(request):
         is_published=True
     ).order_by('-id')
 
+    page_obj, pagination_range = make_pagination(request, queryset=recipes, per_page=PER_PAGE, qty_pages=4)  # noqa: E501
+
     return render(request, 'recipes/pages/search.html', context={
         'page_title': f'Search for "{search_term}"',
         'search_term': search_term,
-        'recipes': recipes,
+        'recipes': page_obj,
+        'pagination_range': pagination_range,
+        'additional_url_query': f'&q={search_term}',
         })
+
+# python -c
+# "import string as s;from random import SystemRandom as
+# sr;print(''.join(sr().choices(s.ascii_letters +
+# s.punctuation, k=64)))"

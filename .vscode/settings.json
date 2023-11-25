@@ -78,6 +78,6 @@
         // "--disallow-untyped-defs",
         // "--disallow-untyped-calls"
     ],
-    "window.zoomLevel": 1,
 
+    "window.zoomLevel": 0,
 }
