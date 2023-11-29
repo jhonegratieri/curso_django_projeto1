@@ -6,7 +6,6 @@ from django.http import Http404
 from django.db.models import Q
 # from django.core.paginator import Paginator
 from utils.pagination import make_pagination
-from django.contrib import messages
 
 from recipes.models import Recipe
 # from django.http import HttpResponse
@@ -20,10 +19,6 @@ PER_PAGE = int(os.environ.get('PER_PAGE', 3))
 
 def home(request):
     recipes = Recipe.objects.filter(is_published=True).order_by('-id')
-
-    messages.error(request, 'Mensagem enviada de sucesso')
-    messages.success(request, 'Mensagem enviada de sucesso')
-    messages.info(request, 'Mensagem enviada de sucesso')
 
     page_obj, pagination_range = make_pagination(request, queryset=recipes, per_page=PER_PAGE, qty_pages=4)  # noqa: E501
 
