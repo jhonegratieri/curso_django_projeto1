@@ -79,5 +79,5 @@
         // "--disallow-untyped-calls"
     ],
 
-    "window.zoomLevel": 0,
+    "window.zoomLevel": 1,
 }
