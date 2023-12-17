@@ -4,24 +4,23 @@
     "python.testing.unittestEnabled": false, // ms-python.python
     "python.testing.pytestEnabled": true,
     "python.testing.pytestArgs": [], // -x to bail
-    "python.linting.flake8Enabled": true,
-    "python.linting.mypyEnabled": true,
-    "python.linting.pylintArgs": [
+    "pylint.args": [
         "--load-plugins=pylint_django",
         "--errors-only"
     ],
-    "python.formatting.autopep8Args": ["--indent-size=4"],
     "python.defaultInterpreterPath": "venv/bin/python",
+    "autopep8.args": ["indentSize=4"],
     "[python]": {
-        "editor.defaultFormatter": "ms-python.python", // ms-python.python
         "editor.tabSize": 4,
         "editor.insertSpaces": true,
-        "editor.formatOnSave": true,
         "editor.formatOnType": true,
+        // "editor.defaultFormatter": "ms-python.python", //"ms-python.black-formatter", // ms-python.python
+        "editor.formatOnSave": true,
         "editor.codeActionsOnSave": {
-        "source.organizeImports": true
-        }
+            "source.organizeImports": "explicit"
+        },
     },
+    // "isort.args":["--profile", "black"],
     "[html]": {
         "editor.formatOnSave": true,
         "editor.defaultFormatter": "vscode.html-language-features",
@@ -64,25 +63,5 @@
     "editor.fontSize": 12,
     "terminal.integrated.fontSize": 12,
 
-
-
-
-
-    // "python.linting.enabled": true,
-    // "python.linting.pylintEnabled": true,
-    // "python.linting.mypyCategorySeverity.error":"Warning",
-    "mypy-type-checker.args": [
-        "--ignore-missing-imports",
-        // "--follow-imports=silent",
-        // "--show-column-numbers",
-        // "--disallow-untyped-defs",
-        // "--disallow-untyped-calls"
-    ],
-
-    "window.zoomLevel": 1,
-
-    "editor.codeActionsOnSave": {
-        "source.organizeImports": true,
-        "editor.formatOnSave": true
-      }
+    "window.zoomLevel": 0,
 }
