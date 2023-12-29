@@ -19,7 +19,9 @@ class RecipeAdmin(admin.ModelAdmin):
     list_per_page = 10
     list_editable = ("is_published",)
     ordering = ("-id",)
-    prepopulated_fields = {"slug": ("title",)}
+    prepopulated_fields = {
+        "slug": ("title",),
+    }
 
 
 # O comando abaixo é equivalente ao decorador @ @admin.register(Category)
