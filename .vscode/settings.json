@@ -63,5 +63,5 @@
     "editor.fontSize": 12,
     "terminal.integrated.fontSize": 12,
 
-    "window.zoomLevel": 1,
+    "window.zoomLevel": 0,
 }
