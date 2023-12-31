@@ -21,8 +21,8 @@ urlpatterns = [
         name="category",
     ),
     path(
-        "recipes/<int:id>/",
-        views.recipe,
+        "recipes/<int:pk>/",
+        views.RecipeDetail.as_view(),
         name="recipe",
     ),
 ]
