@@ -47,6 +47,25 @@ class RecipeListViewBase(ListView):
         return ctx
 
 
+class RecipeListViewHome(RecipeListViewBase):
+    template_name = "recipes/pages/home.html"
+
+
+class RecipeListViewCategory(RecipeListViewBase):
+    model = Recipe
+    context_object_name = "recipes"
+    ordering = ["-id"]
+    template_name = "recipes/pages/category.html"
+
+    def get_queryset(self, *args, **kwargs):
+        qs = super().get_queryset(*args, **kwargs)
+        qs = qs.filter(
+            category__id=self.kwargs.get("category_id"),
+            is_published=True,
+        )
+        return qs
+
+
 def home(request):
     recipes = Recipe.objects.filter(is_published=True).order_by("-id")
 
@@ -75,7 +94,10 @@ def category(request, category_id):
     )
 
     page_obj, pagination_range = make_pagination(
-        request, queryset=recipes, per_page=PER_PAGE, qty_pages=4
+        request,
+        queryset=recipes,
+        per_page=PER_PAGE,
+        qty_pages=4,
     )  # noqa: E501
 
     return render(
