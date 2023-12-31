@@ -1,5 +1,6 @@
 from django.contrib.auth.models import User
 from django.db import models
+from django.urls import reverse
 
 # Create your models here.
 
@@ -25,12 +26,22 @@ class Recipe(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
     is_published = models.BooleanField(default=False)
     cover = models.ImageField(
-        upload_to='recipes/covers/%Y/%m/%d', blank=True, default='')
+        upload_to="recipes/covers/%Y/%m/%d", blank=True, default=""
+    )
     category = models.ForeignKey(
-        Category, on_delete=models.SET_NULL, null=True,
-        related_name='Category', blank=True, default=None)
+        Category,
+        on_delete=models.SET_NULL,
+        null=True,
+        related_name="Category",
+        blank=True,
+        default=None,
+    )
     author = models.ForeignKey(
-        User, on_delete=models.SET_NULL, null=True, related_name='User')
+        User, on_delete=models.SET_NULL, null=True, related_name="User"
+    )
 
     def __str__(self):
         return self.title
+
+    def get_absolute_url(self):
+        return reverse("recipes:recipe", args=(self.id,))
